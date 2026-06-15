@@ -1,0 +1,1 @@
+{"version":3,"file":"welcomeCard.d.ts","sourceRoot":"","sources":["../src/welcomeCard.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,mBAAmB;IAClC,SAAS,EAAE,MAAM,CAAC;IAClB,QAAQ,EAAE,MAAM,CAAC;IACjB,UAAU,EAAE,MAAM,CAAC;CACpB;AAcD,wBAAgB,iBAAiB,CAAC,IAAI,EAAE,mBAAmB,GAAG,MAAM,CA+DnE"}
