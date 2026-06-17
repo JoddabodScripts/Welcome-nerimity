@@ -38,6 +38,9 @@ A welcome bot for Nerimity that sends custom HTML embeds when users join a serve
 - Custom HTML welcome embeds
 - Test command: `cool!testing!testing!command`
 
+## Commiting guide:
+[Commiting guide](COMMIITING.md)
+
 ## Environment Variables
 
 - `BOT_TOKEN` - Your Nerimity bot token (required)
