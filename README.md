@@ -33,7 +33,7 @@ A welcome bot for Nerimity that sends custom HTML embeds when users join a serve
 
 ## Features
 
-- Auto-detects welcome channel (last active channel in server)
+- Auto-detects welcome channel (last active channel in server) one thing tho this auto-detection sucks, dont use it ever!
 - `/setwelcomechannel` command to lock welcome channel (requires admin)
 - Custom HTML welcome embeds
 - Test command: `cool!testing!testing!command`
