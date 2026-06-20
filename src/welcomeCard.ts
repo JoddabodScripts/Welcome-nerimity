@@ -1,13 +1,26 @@
+/**
+ * Options for building a welcome embed card
+ */
 export interface WelcomeEmbedOptions {
+  /** Relative path to user's avatar (will be prepended with CDN URL) */
   avatarUrl: string;
+  /** Username of the new member */
   username: string;
+  /** Name of the server they joined */
   serverName: string;
+  /** Optional member count to display "Member #X" badge */
   memberCount?: number;
 }
 
+/** Background image URL for the welcome card */
 const BG_IMAGE =
   "https://png.pngtree.com/thumb_back/fh260/background/20250401/pngtree-amazing-blue-and-purple-galaxy-background-with-stars-in-the-night-image_17161504.jpg";
 
+/**
+ * Escapes HTML special characters to prevent tag injection
+ * CRITICAL: Nerimity's HTML validator counts tags via regex - unescaped < or > 
+ * in usernames/server names will break tag validation
+ */
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -17,14 +30,23 @@ function escapeHtml(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
+/**
+ * Builds an HTML welcome card embed with user info and server details
+ * @param opts - Welcome card configuration options
+ * @returns HTML string with inline CSS for the welcome card
+ */
 export function buildWelcomeEmbed(opts: WelcomeEmbedOptions): string {
+  // Construct full avatar URL from Nerimity CDN
   const avatarSrc = opts.avatarUrl
     ? `https://cdn.nerimity.com/${opts.avatarUrl}`
     : "";
 
+  // Remove pipe character from server name to avoid display conflicts
   const sname = opts.serverName.replace("|", "");
+  // Build display name with username and server name (both HTML-escaped)
   const displayName = `${escapeHtml(opts.username)} | 💖 ${escapeHtml(sname)}`;
   
+  // Only show member count badge if memberCount is provided
   const memberBadge = opts.memberCount 
     ? `<div class="member-badge">👤 Member #${opts.memberCount}</div>` 
     : '';
