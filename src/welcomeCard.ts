@@ -2,6 +2,7 @@ export interface WelcomeEmbedOptions {
   avatarUrl: string;
   username: string;
   serverName: string;
+  memberCount?: number;
 }
 
 const BG_IMAGE =
@@ -23,6 +24,10 @@ export function buildWelcomeEmbed(opts: WelcomeEmbedOptions): string {
 
   const sname = opts.serverName.replace("|", "");
   const displayName = `${escapeHtml(opts.username)} | 💖 ${escapeHtml(sname)}`;
+  
+  const memberBadge = opts.memberCount 
+    ? `<div class="member-badge">👤 Member #${opts.memberCount}</div>` 
+    : '';
 
   return `
 <style>
@@ -76,7 +81,20 @@ export function buildWelcomeEmbed(opts: WelcomeEmbedOptions): string {
   text-align: center;
   margin-top: 40px;
 }
+
+.member-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 15px;
+  color: #fff;
+  backdrop-filter: blur(10px);
+}
 </style>
-<div class="embedmain"><img class="bgimage" src="${BG_IMAGE}" /><div class="text"><div class="top-section"><img class="avatar-img" src="${avatarSrc}" /><div class="uname">${displayName}</div></div><div class="message">Welcome to the server!</div></div></div>
+<div class="embedmain"><img class="bgimage" src="${BG_IMAGE}" /><div class="text"><div class="top-section"><img class="avatar-img" src="${avatarSrc}" /><div class="uname">${displayName}</div>${memberBadge}</div><div class="message">Welcome to the server!</div></div></div>
 `.trim();
 }

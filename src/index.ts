@@ -84,10 +84,12 @@ client.on(Events.MessageCreate, (message) => {
 client.on(Events.MessageButtonClick, (button) => {
   if (button.id === "smooky") {
     const server = button.channel?.server;
+    const memberCount = server?.members?.cache?.size ?? 0;
     const html = buildWelcomeEmbed({
       avatarUrl: button.user?.avatar ?? "",
       username: button.user?.username ?? "Unknown",
       serverName: server?.name ?? "",
+      memberCount: memberCount,
     });
     button.channel.send(`Welcome [@:${button.userId}] (test)!`, { htmlEmbed: html }).catch(console.error);
   } else if (button.id === "poopy" || button.id === "schlooki") {
@@ -113,10 +115,14 @@ client.on(Events.ServerMemberJoined, async (member) => {
 
   console.log(`Member joined: ${member.user.username} in server ${server.name}`);
 
+  // Get member count from the server's member cache
+  const memberCount = server.members?.cache?.size ?? 0;
+
   const html = buildWelcomeEmbed({
     avatarUrl: member.user.avatar ?? "",
     username: member.user.username,
     serverName: server.name,
+    memberCount: memberCount,
   });
 
   try {
