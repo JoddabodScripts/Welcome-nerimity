@@ -52,6 +52,12 @@ function updatePresence(client: Client) {
  */
 client.on(Events.Ready, () => {
   console.log(`Welcomer bot connected as ${client.user?.username}`);
+
+  // Register slash commands so they auto-parse from /commandName:botUserId format
+  client.updateCommands(TOKEN, [
+    { name: "setwelcomechannel", description: "Set and lock welcome channel to this channel", args: "" },
+  ]).catch(console.error);
+
   updatePresence(client);
   setInterval(() => updatePresence(client), 15000);
 });
