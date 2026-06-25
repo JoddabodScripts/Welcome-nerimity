@@ -18,11 +18,42 @@ if (!TOKEN) {
 // Initialize the Nerimity client
 const client = new Client();
 
+let activityIndex = 0;
+function updatePresence(client: Client) {
+  try {
+    const serverCount = client.servers?.cache?.size ?? 0;
+    const serverLabel = `${serverCount} server${serverCount !== 1 ? "s" : ""}`;
+    const activities = [
+      {
+        action: "Playing",
+        name: "Welcomer Bot",
+        startedAt: Date.now(),
+        title: serverLabel,
+        subtitle: "/setwelcomechannel",
+      },
+      {
+        action: "Watching",
+        name: "New Members Arrive",
+        startedAt: Date.now(),
+        title: "👋",
+        subtitle: "Greetings!",
+      },
+    ];
+    const activity = activities[activityIndex % activities.length];
+    activityIndex += 1;
+    client.user?.setActivity(activity);
+  } catch (e) {
+    console.error("[bot] Failed to update presence:", (e as Error).message);
+  }
+}
+
 /**
  * Bot ready event - fires when client successfully connects
  */
 client.on(Events.Ready, () => {
   console.log(`Welcomer bot connected as ${client.user?.username}`);
+  updatePresence(client);
+  setInterval(() => updatePresence(client), 15000);
 });
 
 /**
